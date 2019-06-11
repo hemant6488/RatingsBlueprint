@@ -12,7 +12,7 @@ logger = logging.getLogger("ratings")
 class DatabaseService:
     def __init__(self):
         try:
-            self.connection = connect("ratings", host=os.environ['DB_PORT_27017_TCP_ADDR'], port=27017)
+            self.connection = connect("casaone", host=os.environ['DB_PORT_27017_TCP_ADDR'], port=27017)
         except MongoEngineConnectionError:
             logger.exception("Fatal Error. Connection to the database can not be established.")
 

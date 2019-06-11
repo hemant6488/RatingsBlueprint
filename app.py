@@ -3,6 +3,7 @@ import logging
 from flask import Flask, render_template
 from flask_restful import Api
 from api.v1.urls import api_v1 as api_blueprint
+from helpers.seedData import seedDatabase
 
 app = Flask(__name__)
 api = Api(app)
@@ -23,4 +24,5 @@ def get():
 
 if __name__ == '__main__':
     initializeLogging()
+    seedDatabase()
     app.run(debug=True, host='0.0.0.0')

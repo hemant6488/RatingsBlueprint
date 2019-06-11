@@ -2,7 +2,6 @@ import time
 
 import logging
 from flask import jsonify, request
-from flask_restful import abort
 
 from config.Constants import Constants
 from helpers.ApiHelper import validateAddRatingsRequest, getFailureResponse, getRecordedRating
@@ -11,36 +10,16 @@ from services.RatingService import RatingService
 logger = logging.getLogger("ratings")
 ratingService = RatingService()
 
-def get_api():
-    """
-     GET Demo API
-     ---
-    responses:
-      200:
-        description: Returns GET demo api response
-    """
-    logger.debug("in demo api")
-    time.sleep(2)
-    return jsonify({'message': "demo get api"}), 200
-
-
-def post_api():
-    """
-     POST Demo API
-     ---
-    responses:
-      200:
-        description: Returns POST demo api response
-    """
-    return jsonify({'message': "demo post api"}), 200
-
 
 def addRating():
     """
     Adds a product rating or updates the existing rating if a corresponding NON-DELETED rating entry already exists.
 
     Requires: userId, rating, productId in POST request.
-    Note: User Authentication not implemented for the scope of the project.
+
+    Note (not implemented for the scope of the project):
+    - User Authentication
+    - Check if the user has actually rented the furniture in the past that he/she is trying to rate.
 
     :return: HTTP Response containing corresponding rating entry from database.
     """
@@ -57,8 +36,22 @@ def addRating():
 
 
 def getRatingsBreakdown():
-    request.get_json()
-    pass
+    """
+    Calculates the ratings breakdown for the given product.
+    :return: Schema:
+    {
+        "productDetails":{},
+        "averageRating":int,
+        "totalRatings":int,
+        "loggedInUserRating":int,
+        "ratingsBreakdown":{
+            //percentages of 5 stars, 4 stars and so on.
+            "5": 60,
+            "4": 20,
+            "3": 5,
+        }
+    }
+    """
 
 
 def removeRating():

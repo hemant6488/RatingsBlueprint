@@ -4,7 +4,7 @@ from mongoengine import *
 
 class Product(Document):
     product_id = IntField(required=True)
-    product_name = IntField(required=True)
+    product_name = StringField(required=True)
     # -- other product attributes come here--
     created_at = DateTimeField()
     modified_at = DateTimeField()

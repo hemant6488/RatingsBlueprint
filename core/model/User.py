@@ -4,7 +4,7 @@ from mongoengine import *
 
 class User(Document):
     user_id = IntField(required=True)
-    user_name = IntField(required=True)
+    user_name = StringField(required=True)
     # -- additional user attributes come here --
     created_at = DateTimeField()
     modified_at = DateTimeField()
