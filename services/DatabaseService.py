@@ -59,7 +59,7 @@ class DatabaseService:
     @staticmethod
     def getAverageRating(product_id):
         try:
-            average_rating = Rating.objects(product_id=product_id).average('rating')
+            average_rating = Rating.objects(product_id=product_id, deleted=False).average('rating')
             return round(average_rating, 2)
         except Exception:
             logger.exception("Error while fetching average rating for product: {}".format(product_id))
@@ -68,7 +68,7 @@ class DatabaseService:
     @staticmethod
     def getRatingsCount(product_id):
         try:
-            ratings_count = Rating.objects(product_id=product_id).count()
+            ratings_count = Rating.objects(product_id=product_id, deleted=False).count()
             return ratings_count
         except Exception:
             logger.exception("Error while fetching ratings count for product: {}".format(product_id))
@@ -77,7 +77,7 @@ class DatabaseService:
     @staticmethod
     def getProductRatingForUser(product_id, user_id):
         try:
-            user_rating = Rating.objects(product_id=product_id, user_id=user_id).first()
+            user_rating = Rating.objects(product_id=product_id, user_id=user_id, deleted=False).first()
             return user_rating.rating
         except Exception:
             logger.exception("Error while fetching ratings count: {}".format(product_id))
@@ -87,7 +87,7 @@ class DatabaseService:
     def getRatings(product_id):
         try:
             ratings = []
-            for entry in Rating.objects(product_id=product_id):
+            for entry in Rating.objects(product_id=product_id, deleted=False):
                 ratings.append(entry.rating)
             return ratings
         except Exception:

@@ -41,6 +41,9 @@ class RatingService:
             response['userDetails'] = self.user.getUserById(params['userId'])
             response['loggedInUserRating'] = self.database.getProductRatingForUser(product_id, params['userId'])
 
+        if response['loggedInUserRating'] is None:
+            response['loggedInUserRating'] = 0
+
         ratings = self.database.getRatings(product_id)
         response['ratingsBreakdown'] = self.computeRatingsBreakdown(ratings)
         return response
@@ -51,5 +54,5 @@ class RatingService:
     @staticmethod
     def computeRatingsBreakdown(ratings):
         c = Counter(ratings)
-        ratings_percentages = dict((i, round(c[i] / len(ratings) * 100, 2)) for i in ratings)
+        ratings_percentages = dict((i, round(c[i] / len(ratings) * 100, 1)) for i in ratings)
         return ratings_percentages
