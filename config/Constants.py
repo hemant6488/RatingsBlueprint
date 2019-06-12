@@ -6,6 +6,7 @@ class Constants:
     STATUS_SUCCESS = "success"
     STATUS_FAILURE = "failure"
     GENERIC_ERROR = "Sorry something went wrong, please try again later."
-    REQUEST_ERROR = "Request has missing fields."
-
+    REQUEST_ERROR = "Bad Request"
+    REMOVE_SUCCESS = "Rating removed successfully."
+    REMOVE_FAILURE = "Error removing rating."
 

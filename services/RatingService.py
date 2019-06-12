@@ -1,13 +1,18 @@
 import logging
+from collections import Counter
 
-from services.DatabaseService import DatabaseService
+from services.DatabaseService import database
+from services.ProductService import ProductService
+from services.UserService import UserService
 
 logger = logging.getLogger("ratings")
 
 
 class RatingService:
     def __init__(self):
-        self.database = DatabaseService()
+        self.database = database
+        self.product = ProductService()
+        self.user = UserService()
 
     def addRating(self, user_id, rating, product_id):
         if self.productAndUserExist(user_id, product_id):
@@ -15,6 +20,7 @@ class RatingService:
             saved_record = self.database.addRating(user_id, rating, product_id)
             return saved_record
         else:
+            logger.error("Product/User does not exist.")
             return None
 
     def productAndUserExist(self, user_id, product_id):
@@ -24,3 +30,26 @@ class RatingService:
             return True
         else:
             return False
+
+    def getRatingsDetailsForProduct(self, params):
+        response = {}
+        product_id = params['productId']
+        response['averageRating'] = self.database.getAverageRating(product_id)
+        response['totalRatings'] = self.database.getRatingsCount(product_id)
+        response['productDetails'] = self.product.getProductById(product_id)
+        if 'userId' in params:
+            response['userDetails'] = self.user.getUserById(params['userId'])
+            response['loggedInUserRating'] = self.database.getProductRatingForUser(product_id, params['userId'])
+
+        ratings = self.database.getRatings(product_id)
+        response['ratingsBreakdown'] = self.computeRatingsBreakdown(ratings)
+        return response
+
+    def removeRating(self, params):
+        return self.database.removeRating(params['userId'], params['productId'])
+
+    @staticmethod
+    def computeRatingsBreakdown(ratings):
+        c = Counter(ratings)
+        ratings_percentages = dict((i, round(c[i] / len(ratings) * 100, 2)) for i in ratings)
+        return ratings_percentages

@@ -2,7 +2,10 @@ import logging
 import random
 
 from core.model.Product import Product
+from core.model.Rating import Rating
 from core.model.User import User
+import numpy as np
+
 logger = logging.getLogger("ratings")
 
 good_words = ["Awesome", "Amazing", "Good", "Perfect", "Fabulous", "Genuine", "Handsome", "Compassionate", "Beautiful",
@@ -18,24 +21,13 @@ names = ["Liam", "Emma", "Noah", "Olivia", "William", "Ava", "James", "Isabella"
          "Madison", "Joseph", "Luna", "Carter", "Grace", "Owen", "Chloe", "Wyatt", "Penelope", "John", "Layla", "Jack",
          "Riley", "Luke", "Zoey", "Jayden", "Nora", "Dylan", "Lily", "Grayson", "Eleanor", "Levi", "Hannah", "Isaac",
          "Lillian", "Gabriel", "Addison", "Julian", "Aubrey", "Mateo", "Ellie", "Anthony", "Stella", "Jaxon", "Natalie",
-         "Lincoln", "Zoe", "Joshua", "Leah", "Christopher", "Hazel", "Andrew", "Violet", "Theodore", "Aurora", "Caleb",
-         "Savannah", "Ryan", "Audrey", "Asher", "Brooklyn", "Nathan", "Bella", "Thomas", "Claire", "Leo", "Skylar",
-         "Isaiah", "Lucy", "Charles", "Paisley", "Josiah", "Everly", "Hudson", "Anna", "Christian", "Caroline",
-         "Hunter", "Nova", "Connor", "Genesis", "Eli", "Emilia", "Ezra", "Kennedy", "Aaron", "Samantha", "Landon",
-         "Maya", "Adrian", "Willow", "Jonathan", "Kinsley", "Nolan", "Naomi", "Jeremiah", "Aaliyah", "Easton", "Elena",
-         "Elias", "Sarah", "Colton", "Ariana", "Cameron", "Allison", "Carson", "Gabriella", "Robert", "Alice", "Angel",
-         "Madelyn", "Maverick", "Cora", "Nicholas", "Ruby", "Dominic", "Eva", "Jaxson", "Serenity", "Greyson", "Autumn",
-         "Adam", "Adeline", "Ian", "Hailey", "Austin", "Gianna", "Santiago", "Valentina", "Jordan", "Isla", "Cooper",
-         "Eliana", "Brayden", "Quinn", "Roman", "Nevaeh", "Evan", "Ivy", "Ezekiel", "Sadie", "Xavier", "Piper", "Jose",
-         "Lydia", "Jace", "Alexa", "Jameson", "Josephine", "Leonardo", "Emery", "Bryson", "Julia", "Axel", "Delilah",
-         "Everett", "Arianna", "Parker", "Vivian", "Kayden", "Kaylee", "Miles", "Sophie", "Sawyer", "Brielle", "Jason",
-         "Madeline"]
+         "Lincoln", "Zoe"]
 
 
 def seedDatabase():
     if User.objects.count() == 0:
-        logger.info("Seeding users data.")
-        for i in range(1, 100):
+        logger.info("Seeding users data")
+        for i in range(1, 30):
             User(
                 user_id=i,
                 user_name=random.choice(names)
@@ -43,8 +35,23 @@ def seedDatabase():
 
     if Product.objects.count() == 0:
         logger.info("Seeding products data.")
-        for i in range(1, 100):
+        for i in range(1, 10):
             Product(
                 product_id=i,
                 product_name=random.choice(good_words) + " " + random.choice(furniture)
             ).save()
+
+    rating_count = Rating.objects.count()
+    if rating_count < 20:
+        logger.info("Seeding random ratings.")
+        while rating_count < 200:
+            for i in range(1, 10):
+                try:
+                    Rating(
+                        product_id=i,
+                        rating=np.random.choice([1, 2, 3, 4, 5], p=[0.10, 0.10, 0.10, 0.15, 0.55]),
+                        user_id=random.randint(10, 30)
+                    ).save()
+                    rating_count += 1
+                except Exception:
+                    pass
