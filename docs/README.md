@@ -7,6 +7,7 @@ http://127.0.0.1:5000/casaone/product/{productId}?userId={userId}
 Notes
 - The database has been seeded with 10 products, 30 users and 200 random ratings.
 - No ratings have been created for first 5 users (1-5) for testing 1st time rating creation.
+- **User will only be able to rate the product if the `userId` query param is passed in the URL.**
 - If the query param `userId` is passed, the web page will display user details as well (only name for now).
 
 
