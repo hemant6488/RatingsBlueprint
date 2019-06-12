@@ -84,7 +84,7 @@ def removeRating():
         if ratingService.removeRating(request_dict) == 1:
             response = {Constants.STATUS_KEY: Constants.STATUS_SUCCESS, Constants.MESSAGE_KEY: Constants.REMOVE_SUCCESS}
         else:
-            response = {Constants.STATUS_KEY: Constants.STATUS_SUCCESS, Constants.MESSAGE_KEY: Constants.REMOVE_FAILURE}
+            response = {Constants.STATUS_KEY: Constants.STATUS_FAILURE, Constants.MESSAGE_KEY: Constants.REMOVE_FAILURE}
         return jsonify(response)
     else:
         return jsonify(getFailureResponse(400)), 400

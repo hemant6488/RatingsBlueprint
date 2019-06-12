@@ -27,7 +27,7 @@ names = ["Liam", "Emma", "Noah", "Olivia", "William", "Ava", "James", "Isabella"
 def seedDatabase():
     if User.objects.count() == 0:
         logger.info("Seeding users data")
-        for i in range(1, 30):
+        for i in range(1, 31):
             User(
                 user_id=i,
                 user_name=random.choice(names)
@@ -35,7 +35,7 @@ def seedDatabase():
 
     if Product.objects.count() == 0:
         logger.info("Seeding products data.")
-        for i in range(1, 10):
+        for i in range(1, 11):
             Product(
                 product_id=i,
                 product_name=random.choice(good_words) + " " + random.choice(furniture)
@@ -45,12 +45,12 @@ def seedDatabase():
     if rating_count < 20:
         logger.info("Seeding random ratings.")
         while rating_count < 200:
-            for i in range(1, 10):
+            for i in range(1, 11):
                 try:
                     Rating(
                         product_id=i,
                         rating=np.random.choice([1, 2, 3, 4, 5], p=[0.10, 0.10, 0.10, 0.15, 0.55]),
-                        user_id=random.randint(10, 29)
+                        user_id=random.randint(6, 30)
                     ).save()
                     rating_count += 1
                 except Exception:
