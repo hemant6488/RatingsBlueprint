@@ -9,6 +9,14 @@ jQuery(document).ready(function ($) {
         $("#rating-star-" + i).toggleClass('btn-default');
 	}
 
+    function showError(message) {
+        $("#message-display").text(message);
+        $("#message-display").removeClass("hidden");
+    }
+
+    function hideError(message) {
+        $("#message-display").addClass("hidden");
+    }
 
     function addRating(value){
         var url = new URL(window.location.href);
@@ -19,6 +27,25 @@ jQuery(document).ready(function ($) {
             url: "/ratings/v1/add",
             contentType: "application/json",
             data: JSON.stringify({rating: Number(value), userId: Number(userId), productId: Number(productId)}),
+            success: function(data){
+                if (data.status == "failure") {
+                    showError(data.message);
+                } else {
+                    hideError();
+                }
+            }
+        });
+    }
+
+    function removeRating(){
+        var url = new URL(window.location.href);
+        var userId = url.searchParams.get("userId");
+        var productId = url.pathname.split('/')[2]
+        $.ajax({
+            type: "POST",
+            url: "/ratings/v1/remove",
+            contentType: "application/json",
+            data: JSON.stringify({userId: Number(userId), productId: Number(productId)}),
             success: function(data){
                 console.log(data)
             }
@@ -46,8 +73,12 @@ jQuery(document).ready(function ($) {
 		}
 
         if (previous_value != selected_value) {
-            addRating(selected_value)
+            addRating(selected_value);
         }
+	}));
+
+	$("#remove-rating").on('click', (function (e) {
+	    removeRating();
 	}));
 
 });

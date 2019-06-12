@@ -55,4 +55,7 @@ class RatingService:
     def computeRatingsBreakdown(ratings):
         c = Counter(ratings)
         ratings_percentages = dict((i, round(c[i] / len(ratings) * 100, 1)) for i in ratings)
+        for i in range(1, 5):
+            if i not in ratings_percentages:
+                ratings_percentages[i] = 0
         return ratings_percentages

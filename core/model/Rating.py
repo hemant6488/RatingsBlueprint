@@ -10,7 +10,7 @@ class Rating(Document):
     created_at = DateTimeField()
     modified_at = DateTimeField()
     meta = {"indexes": [
-        {'fields': ('+user_id', '+product_id', '+deleted'), 'unique': True}
+        {'fields': ('+user_id', '+product_id', '+deleted')}
     ]}
 
     # Overriding the save method to save created and modified times.

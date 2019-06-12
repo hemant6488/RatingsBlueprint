@@ -8,8 +8,12 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='rate.js') }}"></script>
 
-    <h5>Product Id: {{ data.productDetails.id }}</h5>
-    <h5 style="margin-bottom: 30px!important;">Product: {{ data.productDetails.name }}</h5>
+    <div class="container">
+        <h4>Hello {{ data.userDetails.name }}!</h4>
+        <h5>Product Id: {{ data.productDetails.id }}</h5>
+        <h5 style="margin-bottom: 30px!important;">Product: {{ data.productDetails.name }}</h5>
+    </div>
+
 
     <!-- http://www.jquery2dotnet.com/ -->
     <div class="container">
@@ -121,7 +125,17 @@
 	    <button type="button" class="btnrating btn btn-default btn-lg" data-attr="5" id="rating-star-5">
 	        <i class="fa fa-star" aria-hidden="true"></i>
 	    </button>
+
+        <div id="message-display">
+            
+        </div>
 	</div>
+
+    <div class="container top-buffer">
+        <button type="button" class="btn btn-danger" data-attr="5" id="remove-rating">
+	        <i class="fa fa-trash-o" aria-hidden="true"> Delete Rating</i>
+	    </button>
+    </div>
     </body>
     <style>
         body{ margin-top:20px;}
@@ -136,5 +150,7 @@
             margin-top: -10px;
             margin-bottom: 10px;
         }
+        .top-buffer { margin-top:20px;}
+
     </style>
 </html>
