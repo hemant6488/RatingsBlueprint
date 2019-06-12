@@ -21,10 +21,10 @@ jQuery(document).ready(function ($) {
     function addRating(value){
         var url = new URL(window.location.href);
         var userId = url.searchParams.get("userId");
-        var productId = url.pathname.split('/')[2]
+        var productId = url.pathname.split('/')[3]
         $.ajax({
             type: "POST",
-            url: "/ratings/v1/add",
+            url: "/casaone/ratings/v1/add",
             contentType: "application/json",
             data: JSON.stringify({rating: Number(value), userId: Number(userId), productId: Number(productId)}),
             success: function(data){
@@ -40,10 +40,10 @@ jQuery(document).ready(function ($) {
     function removeRating(){
         var url = new URL(window.location.href);
         var userId = url.searchParams.get("userId");
-        var productId = url.pathname.split('/')[2]
+        var productId = url.pathname.split('/')[3]
         $.ajax({
             type: "POST",
-            url: "/ratings/v1/remove",
+            url: "/casaone/ratings/v1/remove",
             contentType: "application/json",
             data: JSON.stringify({userId: Number(userId), productId: Number(productId)}),
             success: function(data){

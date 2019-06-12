@@ -50,7 +50,7 @@ def seedDatabase():
                     Rating(
                         product_id=i,
                         rating=np.random.choice([1, 2, 3, 4, 5], p=[0.10, 0.10, 0.10, 0.15, 0.55]),
-                        user_id=random.randint(10, 30)
+                        user_id=random.randint(10, 29)
                     ).save()
                     rating_count += 1
                 except Exception:

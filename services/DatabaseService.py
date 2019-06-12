@@ -78,7 +78,10 @@ class DatabaseService:
     def getProductRatingForUser(product_id, user_id):
         try:
             user_rating = Rating.objects(product_id=product_id, user_id=user_id, deleted=False).first()
-            return user_rating.rating
+            if user_rating is not None:
+                return user_rating.rating
+            else:
+                return None
         except Exception:
             logger.exception("Error while fetching ratings count: {}".format(product_id))
             return None

@@ -4,12 +4,13 @@ from flask import Flask, render_template, request
 from flask_restful import Api
 from api.v1.urlMappings import api_v1 as api_blueprint
 from config.Config import Config
+from config.Endpoints import Endpoints
 from helpers.seedData import seedDatabase
 from services.RatingService import RatingService
 
 app = Flask(__name__)
 api = Api(app)
-app.register_blueprint(api_blueprint, url_prefix=Config.RATINGS_URL_PREFIX)
+app.register_blueprint(api_blueprint, url_prefix=Endpoints.RATINGS_URL_PREFIX)
 logger = logging.getLogger("ratings")
 
 ratingService = RatingService()
@@ -21,7 +22,7 @@ def initializeLogging():
     logger.setLevel(logging.INFO)
 
 
-@app.route('/product/<product_id>')
+@app.route('/casaone/product/<product_id>')
 def getProductPage(product_id):
     rating_request = {'userId': request.args.get('userId'), 'productId': product_id}
     data = ratingService.getRatingsDetailsForProduct(rating_request)
